@@ -57,10 +57,6 @@ var dbo = db.db("agrigrowth");
             console.log("User Profile Form");
       });
 
-  app.post("/login", function(req, res) {
-            console.log("Login");
-      });
-
   app.post("/signUp", function(req, res) {
             console.log("SignUp");
       });
@@ -72,6 +68,25 @@ var dbo = db.db("agrigrowth");
   app.post("/soilTestingForm", function(req, res) {
             console.log("Soil Testing Form");
       });
+
+      app.get("/login", function(req, res) {
+        var mysort = { _id: 1};
+        var dbo = db.db("agrigrowth");
+          dbo.collection("LoginInfo").find({}).sort(mysort).toArray(function(error, result) {
+              if(error) {
+                  return res.status(500).send(error);
+              };
+              res.send(result);
+          });
+        });
+
+  // app.get("/login", function(req, res) {
+  //   dbo.collection("LoginInfo").find({}).toArray(function(err, result) {
+  //     if (err) throw err;
+  //     res.send(result);
+  //   });
+  // });
+
 
   db.close();
 });
