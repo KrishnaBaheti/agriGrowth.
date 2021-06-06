@@ -4,7 +4,7 @@ var app = Express();
 var mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/node-demo");
+mongoose.connect("mongodb://localhost:27017/agrigrowth");
 
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
@@ -18,18 +18,28 @@ var db;
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
 
-var LoginInfo = new mongoose.Schema({
- login: String,
- password: String
+var signIn = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+  phoneNo: Number,
+  address: String,
+  landmark: String,
+  pincode: Number,
+  district: String,
+  state: String,
+  sizeOfLand: Number,
+  waterSource: String,
+  infoAboutCrop: String
 });
 
-var User = mongoose.model("User", LoginInfo);
+var User = mongoose.model("User", signIn);
 
 // app.get("/", (req, res) => {
 //     res.sendFile(__dirname + "/index.html");
 // });
 
-app.post("/login", (req, res) => {
+app.post("/signUp", (req, res) => {
     var myData = new User(req.body);
     myData.save()
         .then(item => {
