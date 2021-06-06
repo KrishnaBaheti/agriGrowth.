@@ -69,7 +69,7 @@ var dbo = db.db("agrigrowth");
             console.log("Soil Testing Form");
       });
 
-      app.get("/login", function(req, res) {
+      app.post("/login", function(req, res) {
         var mysort = { _id: 1};
         var dbo = db.db("agrigrowth");
           dbo.collection("LoginInfo").find({}).sort(mysort).toArray(function(error, result) {
