@@ -22,15 +22,19 @@ var signIn = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
+  cnfpassword: String,
   phoneNo: Number,
-  address: String,
-  landmark: String,
-  pincode: Number,
-  district: String,
-  state: String,
-  sizeOfLand: Number,
-  waterSource: String,
-  infoAboutCrop: String
+  landInfo: [{
+    address: String,
+    landmark: String,
+    pincode: Number,
+    district: String,
+    state: String,
+    sizeOfLand: Number,
+    sizeOfLandUnit: String,
+    waterSource: String,
+    infoAboutCrop: String
+  }];  
 });
 
 var User = mongoose.model("User", signIn);
@@ -43,10 +47,10 @@ app.post("/signUp", (req, res) => {
     var myData = new User(req.body);
     myData.save()
         .then(item => {
-            console.log("Name saved to database");
+            res.send("Name saved to database");
         })
         .catch(err => {
-            console.log("Unable to save to database");
+            res.status(400).send("Unable to save to database");
         });
 });
 
