@@ -54,6 +54,21 @@ app.post("/signUp", (req, res) => {
         });
 });
 
+app.post("/login", (req, res) => {
+  //var myData = new User(req.body);
+  let email = req.body.email;
+  let password = req.body.password;
+
+  for(var i=0; i < signIn.length; i++){
+    if(signIn[i].email === email && signIn[i].password === password){
+      console.log("Valid User. ");
+      //your logic on validation
+
+      break;// use break or return something to stop looping after validation
+    }
+  }
+});
+
 app.listen(3000, function() {
   console.log("Server started. ");
 });
