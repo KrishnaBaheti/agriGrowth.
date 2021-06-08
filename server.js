@@ -53,20 +53,27 @@ app.post("/signUp", (req, res) => {
             res.status(400).send("Unable to save to database");
         });
 });
-
 app.post("/login", (req, res) => {
   //var myData = new User(req.body);
   let email = req.body.email;
   let password = req.body.password;
 
-  for(var i=0; i < signIn.length; i++){
-    if(signIn[i].email === email && signIn[i].password === password){
-      console.log("Valid User. ");
-      //your logic on validation
+  MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("agrigrowth");
+  dbo.collection("signIn").find({}).toArray(function(err, result) {
+    if (err) throw err;
+    for(var i=0; i < result.length; i++){
+      if(result[i].email === email && result[i].password === password){
+        console.log("Valid User. ");
+        //your logic on validation
 
-      break;// use break or return something to stop looping after validation
+        break;// use break or return something to stop looping after validation
+      }
     }
-  }
+    db.close();
+  });
+ });
 });
 
 app.listen(3000, function() {
