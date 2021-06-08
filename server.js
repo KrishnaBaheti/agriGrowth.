@@ -53,10 +53,11 @@ app.post("/signUp", (req, res) => {
             res.status(400).send("Unable to save to database");
         });
 });
+
 app.post("/login", (req, res) => {
   //var myData = new User(req.body);
-  let email = req.body.email;
-  let password = req.body.password;
+  var email = req.body.email;
+  var password = req.body.password;
 
   MongoClient.connect(url, function(err, db) {
   if (err) throw err;
