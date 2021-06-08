@@ -34,7 +34,7 @@ var signIn = new mongoose.Schema({
     sizeOfLandUnit: String,
     waterSource: String,
     infoAboutCrop: String
-  }];  
+  }]  
 });
 
 var User = mongoose.model("User", signIn);
@@ -54,16 +54,17 @@ app.post("/signUp", (req, res) => {
         });
 });
 
-app.post("/login", (req, res) => {
+app.get("/login", (req, res) => {
   //var myData = new User(req.body);
-  var email = req.body.email;
-  var password = req.body.password;
+  let email = req.body.email;
+  let password = req.body.password;
 
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url, { useNewUrlParser : true, useUnifiedTopology: true }, function(err, db) {
   if (err) throw err;
   var dbo = db.db("agrigrowth");
   dbo.collection("signIn").find({}).toArray(function(err, result) {
     if (err) throw err;
+    console.log(result);
     for(var i=0; i < result.length; i++){
       if(result[i].email === email && result[i].password === password){
         console.log("Valid User. ");
@@ -76,6 +77,7 @@ app.post("/login", (req, res) => {
   });
  });
 });
+
 
 app.listen(3000, function() {
   console.log("Server started. ");
