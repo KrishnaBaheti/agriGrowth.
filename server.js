@@ -3,6 +3,9 @@ const BodyParser = require("body-parser");
 var app = Express();
 var mongoose = require("mongoose");
 
+var prompt = require('prompt');
+prompt.start();
+
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost:27017/agrigrowth");
 
@@ -18,39 +21,77 @@ var db;
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
 
-var signIn = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  cnfpassword: String,
-  phoneNo: Number,
-  landInfo: [{
-    address: String,
-    landmark: String,
-    pincode: Number,
-    district: String,
-    state: String,
-    sizeOfLand: Number,
-    sizeOfLandUnit: String,
-    waterSource: String,
-    infoAboutCrop: String
-  }]  
-});
+// Sign Up, User Information:
+//
+// var signIn = new mongoose.Schema({
+//   name: String,
+//   email: String,
+//   password: String,
+//   cnfpassword: String,
+//   phoneNo: Number,
+//   landInfo: [{
+//     address: String,
+//     landmark: String,
+//     pincode: Number,
+//     district: String,
+//     state: String,
+//     sizeOfLand: Number,
+//     sizeOfLandUnit: String,
+//     waterSource: String,
+//     infoAboutCrop: String
+//   }]
+// });
+// var User = mongoose.model("User", signIn);
 
-var User = mongoose.model("User", signIn);
+// var Schema = mongoose.Schema;
 
-// app.get("/", (req, res) => {
-//     res.sendFile(__dirname + "/index.html");
+// var userInfo = new Schema({
+//   name: { type: String },
+//   email: { type: String },
+//   password: { type: String },
+//   cnfpassword: { type: String },
+//   phoneNo: { type: Number }
+  // landInfo: [{
+  //   address: String,
+  //   landmark: String,
+  //   pincode: Number,
+  //   district: String,
+  //   state: String,
+  //   sizeOfLand: Number,
+  //   sizeOfLandUnit: String,
+  //   waterSource: String,
+  //   infoAboutCrop: String
+  // }]
 // });
 
-app.post("/signUp", (req, res) => {
-    var myData = new User(req.body);
+var userInfo = new mongoose.Schema ({ //layout of the collection
+  name: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  password: {
+    type: String
+  },
+  cnfpassword: {
+    type: String
+  },
+  phoneNo: {
+    type: Number
+  }
+});
+
+var users = mongoose.model("users", userInfo);
+
+app.get("/signUp", (req, res) => {
+    var myData = new users(req.body);
     myData.save()
         .then(item => {
-            res.send("Name saved to database");
+          console.log("User information saved to database. ");
         })
         .catch(err => {
-            res.status(400).send("Unable to save to database");
+            console.log(err);;
         });
 });
 
@@ -62,7 +103,7 @@ app.get("/login", (req, res) => {
   MongoClient.connect(url, { useNewUrlParser : true, useUnifiedTopology: true }, function(err, db) {
   if (err) throw err;
   var dbo = db.db("agrigrowth");
-  dbo.collection("signIn").find({}).toArray(function(err, result) {
+  dbo.collection("users").find({}).toArray(function(err, result) {
     if (err) throw err;
     console.log(result);
     for(var i=0; i < result.length; i++){
