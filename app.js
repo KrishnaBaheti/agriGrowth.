@@ -16,50 +16,47 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 MongoClient.connect(url, function(err, db) {
 if (err) throw err;
-var dbo = db.db("agrigrowth");
-  var myobj1 = { soilType: null, temperature: null, humidity: null, ph: null, rainfall: null, crop: null };
-  console.log(myobj1);
+// var dbo = db.db("agrigrowth");
+//   var myobj1 = { soilType: null, temperature: null, humidity: null, ph: null, rainfall: null, crop: null };
+//   console.log(myobj1);
+//
+//   dbo.collection("SoilTestingInfo").insertOne(myobj1, function(error, res) {
+//           if(error) {
+//               console.error(error);
+//           }
+//   });
+  //
+  // var myobj2 = { state: null, district: null, cropYear: null, season: null, crop: null, area: null, production: null };
+  // console.log(myobj2);
+  //
+  // dbo.collection("CropInfo").insertOne(myobj2, function(error, res) {
+  //         if(error) {
+  //             console.error(error);
+  //         }
+  // });
 
-  dbo.collection("SoilTestingInfo").insertOne(myobj1, function(error, res) {
-          if(error) {
-              console.error(error);
-          }
-  });
+  // var myobj3 = { email: null, password: null };
+  // console.log(myobj3);
+  //
+  // dbo.collection("LoginInfo").insertOne(myobj3, function(error, res) {
+  //         if(error) {
+  //             console.error(error);
+  //         }
+  // });
 
-  var myobj2 = { state: null, district: null, cropYear: null, season: null, crop: null, area: null, production: null };
-  console.log(myobj2);
+  // var myobj4 = { name: null, email: null, password: null, phoneNo: null, address: null, landmark: null, pincode: null, district: null, state: null, sizeOfLand: null, waterSource: null, infoAboutCrop: null };
+  // console.log(myobj4);
+  //
+  // dbo.collection("UserInfo").insertOne(myobj4, function(error, res) {
+  //         if(error) {
+  //             console.error(error);
+  //         }
+  // });
 
-  dbo.collection("CropInfo").insertOne(myobj2, function(error, res) {
-          if(error) {
-              console.error(error);
-          }
-  });
-
-  var myobj3 = { email: null, password: null };
-  console.log(myobj3);
-
-  dbo.collection("LoginInfo").insertOne(myobj3, function(error, res) {
-          if(error) {
-              console.error(error);
-          }
-  });
-
-  var myobj4 = { name: null, email: null, password: null, phoneNo: null, address: null, landmark: null, pincode: null, district: null, state: null, sizeOfLand: null, waterSource: null, infoAboutCrop: null };
-  console.log(myobj4);
-
-  dbo.collection("UserInfo").insertOne(myobj4, function(error, res) {
-          if(error) {
-              console.error(error);
-          }
-  });
-
-  app.get("/userProfile", function(req, res) {
+  app.get("/signUp", function(req, res) {
             console.log("User Profile Form");
       });
 
-  app.post("/signUp", function(req, res) {
-            console.log("SignUp");
-      });
 
   app.post("/signUp2", function(req, res) {
             console.log("SignUp 2");
